@@ -1,0 +1,41 @@
+#textInput {
+  border: none;
+  border-bottom: 3px solid aqua;
+}
+
+.userText {
+  color: white;
+  font-family: monospace;
+  font-size: 17px;
+  text-align: right;
+  line-height: 30px;
+}
+.userText span {
+  background-color: #009688;
+  padding: 10px;
+  border-radius: 2px;
+}
+.botText {
+  color: white;
+  font-family: monospace;
+  font-size: 17px;
+  text-align: left;
+  line-height: 30px;
+}
+.botText span {
+  background-color: #ef5350;
+  padding: 10px;
+  border-radius: 2px;
+}
+.background-container {
+  /* height: 100%; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("https://images.hdqwalls.com/download/hosting-colors-8k-zk-1920x1080.jpg");
+}
+.chatbox {
+  float: center;
+  max-height: 500px;
+  max-width: 200px;
+}

@@ -1,0 +1,76 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>Check out where you are going and what you can do!</h1>
+    
+    <div class="form-group">
+        <input class="form-control" type="text" id="locality" value="Cedar Cottage" placeholder="Enter your locality">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="text" id="city" value="Vancouver" placeholder="Enter your city">
+    </div>
+    <div class="form-group">
+        <label for="zoom">Zoom (between 0 and 100):</label>
+        <input class="form-control" type="range" id="zoom" min="0" value="13" max="100">
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="number" id="width" value="600" placeholder="Enter width"/>
+    </div>
+    <div class="form-group">
+        <input class="form-control" type="number" id="height" value="300" placeholder="Enter height">
+    </div>
+    
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="roadmap" checked name="maptype">roadmap
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="satellite" name="maptype">satellite
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="hybrid" name="maptype">hybrid
+        </label>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" value="terrain" name="maptype">terrain
+        </label>
+    </div>
+    
+    <button class="btn btn-primary btn-block" onclick= "getmap()">Show me!</button>
+    
+    <br>
+
+    <img id="map"/>
+</div>
+
+</body>
+
+<script>
+    function getmap() {
+        var suburb = document.getElementById('locality').value
+        var city = document.getElementById('city').value
+        var width = document.getElementById('width').value
+        var height = document.getElementById('height').value
+        var zoomChange = document.getElementById('zoom').value
+        var maptype = document.querySelector('input[name="maptype"]:checked').value;
+        
+        var mapurl = `https://maps.googleapis.com/maps/api/staticmap?center=${suburb},${city}&zoom=${zoomChange}&size=${width}x${height}&maptype=${maptype}&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyCDbW67a6lhVxdOYJAo9ELtY6NrjPMa_9U`
+ 
+        var map = document.getElementById('map')
+        map.src = mapurl
+    }
+</script>
+</html>

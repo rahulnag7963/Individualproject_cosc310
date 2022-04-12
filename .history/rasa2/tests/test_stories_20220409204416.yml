@@ -1,0 +1,442 @@
+#### This file contains tests to evaluate that your bot behaves as expected.
+#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+
+stories:
+
+ZE-G2Y;
+- story: get_weather
+  steps: 
+  - user: |
+      Hi
+    intent: greet
+  - action: utter_greet_reply
+  - user: |
+      What is the temperature today
+    intent: weather
+  - action: utter_ask_weather_location
+  - user: |
+      [Kelowna]{"entity":"weather_loc", "value":"Kelowna"}
+    intent: city_info
+  - action: action_get_weather
+  - user: |
+      Thanks!
+    intent: thanks
+  - action: utter_welcome
+  - action: utter_goodbye
+
+
+- story: get_weather_short
+  steps:
+  - user: |
+      what is the weather like today in [London]{"entity":"weather_loc", "value":"London"}
+    intent: weather_for_loc
+  - action: action_get_weather
+  - user: |
+      Thank you!
+    intent: thanks
+  - action: utter_welcome
+  - action: utter_goodbye
+
+- story: hotelBook_happyP
+  steps:
+  - user: | 
+    I would like to book a place in [London]{"entity":"hotel_book", "value":"London"} 
+  intent: hotel_book
+  - action: hotel_form
+  - active_loop: 
+  - action: utter_see_do
+  - action: action_hotelForm
+  - action: action_slot_reset
+  - user: | 
+      Thanks for the help!
+    intent: thanks
+  - action: utter_welcome
+
+
+- story: hotelBook_happyP1
+  steps: 
+  - user: |
+    I'm looking to find a place in [London]{"entity":"hotel_book", "value":"London"}
+  intent: hotel_book
+  - action: hotel_form
+  - active_loop:
+  - user: |
+    This isn't the place I was looking for. 
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I like this place!
+  intent: affirm
+  - action: hotel_form
+  - active_loop:
+  - action: utter_see_do
+  - action: action_hotelForm
+  - action: action_slot_reset
+  - user: | 
+      Thanks for the help!
+    intent: thanks
+  - action: utter_welcome
+
+
+- story: hotelBook_sadP2
+  steps: 
+  - user: |
+    I'm looking to find a place in [London]{"entity":"hotel_book", "value":"London"}
+  intent: hotel_book
+  - action: hotel_form   
+  - active_loop:   
+  - user : |
+    This is not what I was looking for. 
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: |
+    I no longer wish to use this program.
+  intent: deny
+  - action: utter_goodbye
+
+
+- story: flightBook1 happy1
+  steps: 
+  - user: |
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook1 sadP1
+  steps: 
+  - user: | 
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I am certain you cannot help me further
+  - action: flight_form1
+  intent: affirm
+  - action: flight_form1
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook1 sadP2
+  steps: 
+  - user: | 
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop: flight_form1
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: |
+    I do not want to book a flight.
+  intent: deny
+  - action: utter_goodbye
+
+
+- story: flightBook1 happy1
+  steps: 
+  - user: |
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook1 sadP1
+  steps: 
+  - user: | 
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I am certain you cannot help me further
+  - action: flight_form1
+  intent: affirm
+  - action: flight_form1
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook1 sadP2
+  steps: 
+  - user: | 
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: |
+    I do not want to book a flight.
+  intent: deny
+  - action: utter_goodbye
+
+
+- story: flightBook1 happy2
+  steps: 
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: welcome  
+
+
+- story: flightBook1 sadP3
+  steps: 
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: |
+    Am unsure about finding a flight.
+  intent: affirm
+  - action: flight_form1
+  - active_loop: 
+  - action: utter_see_do
+  - action: action_flight_form1
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: welcome  
+
+
+- story: flightBook1 sadP4
+  steps: 
+  - user: |
+    I'm looking for a roundtrip.
+  intent: round_trip
+  - action: flight_form1
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: |
+    I do not want to book a flight.
+  intent: deny
+  - action: utter_goodbye
+
+
+- story: flightbook2 happy1 
+  steps: 
+  - user: |
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form2
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightbook2 sadP1
+  steps: 
+  - user: |
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I may find another price appealing.
+  intent: affirm
+  - action: flight_form2
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form2
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightbook2 sadP2
+  steps: 
+  - user: |
+    I'm looking to book a flight to [London]{"entity":"flight_book", "value":"London"}
+  intent: flight_book
+  - action: utter_flight_return
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - user: |
+    I don't find this prices appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I dont feel like flying anymore. 
+  intent: deny
+  - action: utter_goodbye
+
+
+- story: flightBook2 happy2
+  steps:
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form2
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook2 sadP3
+  steps: 
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - user: |
+    I don't find this price appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I may find another price appealing.
+  intent: affirm
+  - action: flight_form2
+  - active_loop:
+  - action: utter_see_do
+  - action: action_flight_form2
+  - action: action_slot_reset
+  - user: | 
+    Thanks for the assistance!
+  intent: thanks
+  - action: utter_welcome
+
+
+- story: flightBook2 sadP4
+  steps:
+  - user: |
+    I'm looking for a oneway.
+  intent: one_way
+  - action: flight_form2
+  - active_loop:
+  - user: |
+    I don't find this price appealing.
+  intent: out_of_scope
+  - action: utter_out_of_scope
+  - action: utter_ask_continue
+  - user: | 
+    I dont feel like flying anymore. 
+  intent: deny
+  - action: utter_goodbye
+# - story: hotelBook_happyP
+#   steps:
+#   - user: |
+#       I am looking for a hotel
+#     intent: hotel_book
+#     -
